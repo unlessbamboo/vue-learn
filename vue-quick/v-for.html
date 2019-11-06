@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-for绑定数组来渲染列表</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app-4">
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.text }}
+      </li>
+    </ol>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app-4',
+      data: {
+        todos: [
+          {text: '学习javascript'},
+          {text: '学习vue'},
+          {text: '学习项目'},
+        ]
+      }
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试Vue中freeze函数, 响应系统不再最终已释放的对象</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app-8">
+    <p>{{ foo }}</p>
+    <button v-on:click="foo = 'baz'">更改值</button>
+  </div>
+
+  <script>
+    var data = {
+      foo: 'bar',
+    };
+
+    // 必须放在new Vue实例初始化之前
+    Object.freeze(data);
+
+    var vm = new Vue({
+      el: '#app-8',
+      data: data,
+    });
+
+  </script>
+</body>
+</html>

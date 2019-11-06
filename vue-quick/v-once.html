@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-once, 一旦绑定, 数据不再进行更新</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app-9">
+    <p>{{ message }}</p>
+    <!-- 此时点击button实际上不生效 -->
+    <button v-on:click="changeMessage">更改内容</button>
+
+    <p v-once>不可变内容: {{ content }}</p>
+    <button v-on:click="changeContent">更改内容</button>
+
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app-9',
+      data: {
+        message: '我是笨蛋',
+        content: '悲催的娃'
+      },
+      methods: {
+        changeMessage: function() {
+          this.message = '我是聪明蛋';
+        },
+        changeContent: function() {
+          this.content = '幸运的娃';
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

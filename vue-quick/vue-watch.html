@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试watch侦听属性,以监测某个属性</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app-13">
+    <p>{{ fullname }}</p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app-13',
+      data: {
+        firstName: 'Foo',
+        lastName: 'Bar',
+        fullName: 'Foo Bar',
+      },
+      // 这里这样使用 watch 属于滥用该功能, 此时应该使用计算属性, 但是这里仅仅作为简单测试而已
+      watch: {
+        firstName: function (val) {
+          this.fullName = val + ' ' + this.lastName;
+        },
+        lastName: function (val) {
+          this.fullName = this.firstName + ' ' + val;
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

@@ -8,7 +8,12 @@
 <body>
 
   <div id="app-3">
+    <!-- v-if是一个指令, 必须依托于元素 -->
     <p v-if="seen">现在你看到我了</p>
+
+    <p v-if="show === 1">我是笨蛋</p>
+    <p v-else-if="show === 2">我是聪明蛋</p>
+    <p v-else>我是傻瓜</p>
   </div>
 
   <script>
@@ -16,6 +21,7 @@
       el: '#app-3',
       data: {
         seen: true,
+        show: 2,
       }
     })
   </script>

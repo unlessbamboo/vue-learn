@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-show展示功能并了解和v-if的区别</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 相比v-if, 这个元素在一开始就渲染好, 但是始终存在, 实际上使用display来隐藏或者展示 -->
+    <h1 v-show="ok">hello bamboo!</h1>
+    <br>
+    <button v-on:click="changeShow">隐藏或者展示</button>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        ok: true,
+      },
+      methods: {
+        changeShow: function () {
+          this.ok = this.ok ? false : true;
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

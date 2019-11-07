@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-bind在class列表和内联样式上的操作</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 方式 1: active的存在与否取决于isActive是否为真, 最终渲染的class为: "static ? ?" -->
+    <div name="embeded" class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>
+    <!-- 方式 2: 将绑定的数据对象提取出来, 作为一个整体对象最终被vue解释器渲染 -->
+    <div name="object" v-bind:class="classObject"></div>
+    <!-- 方式 3: 使用计算属性 -->
+    <div name="attr" v-bind:class="calculateObject"></div>
+    <!-- 方式 4: 数组语法 -->
+    <div name-="array" v-bind:class="[activeClass, errClass]"></div>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        isActive: true,
+        hasError: true,
+        classObject: {
+          name: true,
+          'my-age': false,
+          value: true,
+        },
+        activeClass: 'active',
+        errClass: 'text-danger',
+      },
+      computed: {
+        calculateObject: function () {
+          // 返回一个对象到模板中
+          return {
+            active: this.isActive && !this.hasError,
+            'text-danger': this.hasError && this.hasError.type === 'fatal',
+            'number': true,
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-html自动转换HTML格式内容</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app-11">
+    <p>Using mustaches: {{ rawHtml }}</p>
+    <!-- 这里不会输出原始字符串, 会自动转换 -->
+    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app-11',
+      data: {
+        rawHtml: '<span style="color:red"> This should be red.</span>'
+      }
+    })
+  </script>
+
+</body>
+</html>

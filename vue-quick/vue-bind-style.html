@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试v-bind和style的用法</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 方式 1: 绑定CSS 样式, 内嵌的实际上为 JS 对象 -->
+    <div v-bind:style="{color: activeColor, fontSize: fontSize + 'px' }">
+      <p>我是内嵌对象</p>
+    </div>
+    <!-- 方式 2: 使用样式对象 -->
+    <div v-bind:style="styleObject">
+      <p>我是样式对象</p>
+    </div>
+    <!-- 方式 3: 使用计算属性 -->
+    <div v-bind:style="calculateObject">
+      <p>我是计算属性</p>
+    </div>
+    <!-- 方式 4: 使用数组对象 -->
+    <div v-bind:style="[colorStyles, sizeStyles]">
+      <p>我是数组对象</p>
+    </div>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        activeColor: 'red',
+        fontSize: 30,
+        styleObject: {
+          color: 'blue',
+          fontSize: '50px',
+        },
+        // 数组 + 样式对象的用法
+        colorStyles: {
+          color: 'black',
+        },
+        sizeStyles: {
+          fontSize: '20px',
+        }
+      },
+      computed: {
+        calculateObject: function () {
+          return {
+            color: 'yellow',
+            fontSize: '10px',
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

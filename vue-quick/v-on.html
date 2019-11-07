@@ -7,8 +7,17 @@
 </head>
 <body>
   <div id="app-5">
+    <!-- 方式 1: 自定义方法 -->
     <p>{{ message }}</p>
     <button v-on:click="reverseMessage">反转消息</button>
+
+    <!-- 方式 2: 在内联 JS 中调用方法 -->
+    <br>
+    <button v-on:click="say('hi')">Say hi</button>
+
+    <!-- 方式 3: 需要访问 DOM 原始事件 -->
+    <br>
+    <button v-on:click="warn('Is a warn', $event)">Submit并传入event</button>
   </div>
 
   <script>
@@ -22,6 +31,15 @@
         reverseMessage: function () {
           // 更新应用message状态, 后续的 DOM 操作由 Vue 来处理.
           this.message = this.message.split('').reverse().join('');
+        },
+        say: function (content) {
+          alert(content);
+        },
+        warn: function (content, event) {
+          if (event) {
+            event.preventDefault();
+          }
+          alert(content);
         }
       }
     })

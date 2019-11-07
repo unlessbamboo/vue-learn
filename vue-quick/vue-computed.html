@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试computed计算属性</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app-12">
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app-12',
+      data: {
+        message: '测试计算属性',
+      },
+      computed: {
+        // 默认情况下为getter方法
+        reversedMessage: {
+          // 函数reversedMessage将作为vm.reversedMessage的getter函数, 相比方法调用, computed会自动缓存数据, 知道message值发生变动
+          get: function () {
+            return this.message.split('').reverse().join('');
+          },
+          // 一旦赋值this.reversedMessage = 'xxxx', 则会立刻调用该函数
+          set: function (newValue) {
+            console.log('Old:' + this.message + ' new:' + newValue);
+            this.message = newValue;
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

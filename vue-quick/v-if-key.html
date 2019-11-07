@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试vue的复用功能以及使用key来避免复用逻辑</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <template v-if="loginType == 'username'">
+      <label>Username</label>
+      <input placeholder="Enter your username">
+    </template>
+    <template v-else=>
+      <label>Email</label>
+      <input placeholder="Enter your email address">
+    </template>
+    <br>
+    <button v-on:click="toggleLoginType">更改登录方式</button>
+
+    <p>==============================</p>
+    <template v-if="showMethod == 'color'">
+      <label>Color</label>
+      <input placeholder="Enter your color" key="color-input">
+    </template>
+    <template v-else>
+      <label>Size</label>
+      <input placeholder="Enter your size" key="size-input">
+    </template>
+    <br>
+    <button v-on:click="toggleShowMethod">更改显示方式</button>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        loginType: 'username',
+        showMethod: 'color',
+      },
+      methods: {
+        toggleLoginType: function () {
+          if (this.loginType != 'username') {
+            this.loginType = 'username'
+          } else {
+            this.loginType = 'email'
+          }
+        },
+        toggleShowMethod: function () {
+          if (this.showMethod != 'color') {
+            this.showMethod = 'color'
+          } else {
+            this.showMethod = 'other'
+          }
+        },
+      }
+    })
+  </script>
+
+</body>
+</html>

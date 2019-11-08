@@ -7,8 +7,100 @@
 </head>
 <body>
   <div id="app-6">
-    <p>{{ message }}</p>
-    <input v-model="message" >
+    <!-- 方式 1: 双向绑定文本text, 此时使用value属性和input事件 -->
+    <p>Message is: {{ message }}</p>
+    <input v-model="message" placeholder="please edit me">
+
+    <!-- 方式 2: 双向绑定多行文本textarea -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <span>My multiple message is:</span>
+    <p style="white-space: pre-line;">{{ message2 }}</p>
+    <textarea v-model="message2" placeholder="增加多行信息"></textarea>
+
+    <!-- 方式 3: 单选框checkbox, 使用checked属性和change事件 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <input type="checkbox" id="checkbox" v-model="message3">
+    <label for="message3">单选框: {{ message3 }}</label>
+
+    <!-- 方式 4: 多个复选框(单选框增加value值)绑定到一个数组中, 双向绑定, 每次勾选都会将值存入数组中 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <input type="checkbox" id="jack" value="Jack" v-model="message4">
+      <label for="jack">Jack</label>
+      <input type="checkbox" id="john" value="John" v-model="message4">
+      <label for="john">John</label>
+      <input type="checkbox" id="mike" value="Mike" v-model="message4">
+      <label for="mike">Mike</label>
+      <br>
+      <span>Checked names: {{ message4 }}</span>
+    </div>
+
+    <!-- 方式 5: 单选按钮radio, 使用checked属性和change事件 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <input type="radio" id="one" value="one" v-model="message5">
+      <label for="one">One</label>
+      <input type="radio" id="two" value="two" v-model="message5">
+      <label for="two">Two</label>
+      <br>
+      <span>单选按钮值: {{ message5 }}</span>
+    </div>
+
+    <!-- 方式 6: 选择下拉框select(单选), 将value作为prop, change作为事件 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <select v-model="message6">
+        <option disabled value="">选择女孩子</option>
+        <option>小潘</option>
+        <option>小爱</option>
+        <option>小美</option>
+      </select>
+      <br>
+      <span>你选择的女孩子:{{ message6 }}</span>
+    </div>
+
+    <!-- 方式 7: 下拉框(多选), 选择的时候需要shift配合多选 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <select v-model="message7" style="width: 50px" multiple>
+        <option>小德</option>
+        <option>小战</option>
+        <option>小法</option>
+      </select>
+      <span>选择的职业: {{ message7 }}</span>
+    </div>
+
+    <!-- 方式 8: 使用v-for渲染下拉框 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <select v-model="message8">
+      <option v-for="option in options" v-bind:value="option.value">
+        {{ option.text }}
+      </option>
+    </select>
+    <br>
+    <span>使用v-for下拉框: {{ message8 }}</span>
+
+    <!-- 方式 9: 复选框-动态 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <input type="checkbox" v-model="message9" true-value="yes" false-value="no">
+    <br>
+    <span>复选框动态: {{ message9 }}</span>
+
+    <!-- 方式 10: 选择框-内联对象字面量, 选择该项, 会直接打印整个对象内容 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <select v-model="message10">
+      <option v-bind:value="{ number3: 123 }">123</option>
+    </select>
+    <br>
+    <span>选择框动态: {{ message10 }}</span>
+
+    <!-- 方式 11: 使用修饰符来提前处理绑定的数据值: lazy, number, trim -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <input type="number" v-model.number="message11">
+    <br>
+    <span>你的年龄: {{ message11 }}</span>
+
+
   </div>
 
   <script>
@@ -16,6 +108,23 @@
       el: '#app-6',
       data: {
         message: '你好, 我绑定的表单输入',
+        message2: 'what is your name?',
+        message3: true,
+        message4: [],  // 这里绑定一个数组, 存放多个单选框内容, 从而组成一个复选框
+        message5: '',  // 单选按钮
+        message6: '',  // 下拉框
+        message7: [],  // 多选框, 这是一个数组
+        message8: '小爱',  // 使用v-bind:value来双向绑定特定属性值
+        options: [
+          {text: 'one', value: '小潘'},
+          {text: 'two', value: '小战'},
+          {text: 'threee', value: '小法'},
+        ],
+
+        /* ******************************* */
+        message9: 'no',
+        message10: '',
+        message11: 0,
       }
     })
   </script>

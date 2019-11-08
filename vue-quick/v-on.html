@@ -18,6 +18,10 @@
     <!-- 方式 3: 需要访问 DOM 原始事件 -->
     <br>
     <button v-on:click="warn('Is a warn', $event)">Submit并传入event</button>
+
+    <!-- 错误 1: 如果没有相应的处理函数, 则不会做任何操作, 该事件自动被删除, 此时打开 HTML 结构, 会发现下面的button没有任何event -->
+    <br>
+    <button v-on:click="doNothing">不做任何操作</button>
   </div>
 
   <script>

@@ -8,18 +8,95 @@
 <body>
 
   <div id="app-7">
+    <!-- 1 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
     <ol>
-      <!-- 为每一个todo-item提供todo对象 -->
+      <!-- 为每一个todo-item提供todo对象, 利用v-bind来动态传递prop -->
       <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
     </ol>
+
+    <!-- 2: 组件复用, 每一次使用组件都会有一个实例被创建, 彼此独立开来 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+    </div>
+
+    <!-- 3: 组件复用, 彼此联系 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <button-counter-1></button-counter-1>
+      <button-counter-1></button-counter-1>
+      <button-counter-1></button-counter-1>
+    </div>
+
+    <!-- 4: 通过组件来赋值 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <blog-post title="My journey with Vue"></blog-post>
+      <blog-post title="Blogging with Vue"></blog-post>
+      <blog-post title="Why Vue is so fun"></blog-post>
+    </div>
+
+    <!-- 5: 练习多个标题 -->
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <div>
+      <blog-post2
+          v-for="post in posts"
+          v-bind:key="post.key"
+          v-bind:post="post">
+      </blog-post2>
+    </div>
+
+    <!-- 6: 子组件同父级的通信机制 -->
+    <div :style="{fontSize: postFontSize + 'em'"
+
   </div>
 
   <script>
+    // 组件 1: 定义一个名为todo-item的新组件, 后续可以在HTML中使用该组件
     Vue.component('todo-item', {
       template: '<li>{{ todo.text }}</li>',
-      // prop--自定义特性, 其中prop名为todo. 子单元: 通过props接口和父单元解耦
+      // prop--自定义特性, 值传递给props时, 就会变成组件实例的一个属性. 其中prop名为todo. 子单元: 通过props接口和父单元解耦
       props: ['todo'],
+    });
+
+    // 组件 2: 利用函数来定义data对象
+    Vue.component('button-counter', {
+      // data属性同vue, 这里必须通过一个函数来返回字典对象: {count: 0}, 否则在复用的时候会影响到其他实例
+      data: function () {
+        return {count: 0}
+      },
+      template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',  // 使用模板
+    });
+
+    // 组件 3:
+    var myData = {count: 0};
+    Vue.component('button-counter-1', {
+      data: function () {
+        return myData;
+      },
+      template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',  // 使用模板
+    });
+
+    // 组件 4:
+    Vue.component('blog-post', {
+      props: ['title'],
+      template: '<h3>{{ title }}</h3>',
     })
+
+    // 组件 5: 模板内容必须有一个单独的父类, 否则报错
+    Vue.component('blog-post2', {
+      props: ['post'],
+      template: `
+        <div class="blog-post2">
+          <h3>{{ post.title }}</h3>
+          <div v-html="post.content"></div>
+        </div>
+      `,
+    })
+
     var app7 = new Vue({
       el: '#app-7',
       data: {
@@ -27,9 +104,15 @@
           { id: 0, text: '蔬菜' },
           { id: 1, text: '奶酪' },
           { id: 2, text: '随便其它什么人吃的东西' }
-        ]
+        ],
+        posts: [
+          {id: 1, title: "我是 1", content: "<h1>我是原始html1</h1>"},
+          {id: 2, title: "我是 2", content: "<h1>我是原始html2</h1>"},
+          {id: 3, title: "我是 3", content: "<h1>我是原始html3</h1>"},
+        ],
+        postFontSize: 1,
       }
-    })
+    });
   </script>
 
 
